@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		A626E5171A92D02100169035 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A626E5161A92D02100169035 /* AppDelegate.swift */; };
 		A626E51A1A92D02100169035 /* HopTimer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A626E5181A92D02100169035 /* HopTimer.xcdatamodeld */; };
-		A626E51C1A92D02100169035 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A626E51B1A92D02100169035 /* ViewController.swift */; };
 		A626E51F1A92D02100169035 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A626E51D1A92D02100169035 /* Main.storyboard */; };
 		A626E5211A92D02100169035 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A626E5201A92D02100169035 /* Images.xcassets */; };
 		A626E5241A92D02100169035 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A626E5221A92D02100169035 /* LaunchScreen.xib */; };
@@ -18,6 +17,7 @@
 		A626E53C1A92DA2D00169035 /* Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A626E53B1A92DA2D00169035 /* Ingredient.swift */; };
 		A626E53E1A92DA2D00169035 /* IngredientType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A626E53D1A92DA2D00169035 /* IngredientType.swift */; };
 		A626E5401A92DB5800169035 /* RecipeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A626E53F1A92DB5800169035 /* RecipeTVC.swift */; };
+		A6E6C2991A9427120093CC7C /* AddRecipeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E6C2981A9427120093CC7C /* AddRecipeVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,7 +35,6 @@
 		A626E5151A92D02100169035 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A626E5161A92D02100169035 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A626E5191A92D02100169035 /* HopTimer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HopTimer.xcdatamodel; sourceTree = "<group>"; };
-		A626E51B1A92D02100169035 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A626E51E1A92D02100169035 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A626E5201A92D02100169035 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A626E5231A92D02100169035 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -46,6 +45,7 @@
 		A626E53B1A92DA2D00169035 /* Ingredient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ingredient.swift; sourceTree = "<group>"; };
 		A626E53D1A92DA2D00169035 /* IngredientType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientType.swift; sourceTree = "<group>"; };
 		A626E53F1A92DB5800169035 /* RecipeTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeTVC.swift; sourceTree = "<group>"; };
+		A6E6C2981A9427120093CC7C /* AddRecipeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRecipeVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,16 +87,16 @@
 		A626E5131A92D02100169035 /* HopTimer */ = {
 			isa = PBXGroup;
 			children = (
-				A626E51B1A92D02100169035 /* ViewController.swift */,
 				A626E5161A92D02100169035 /* AppDelegate.swift */,
-				A626E51D1A92D02100169035 /* Main.storyboard */,
+				A6E6C2981A9427120093CC7C /* AddRecipeVC.swift */,
 				A626E53F1A92DB5800169035 /* RecipeTVC.swift */,
-				A626E5201A92D02100169035 /* Images.xcassets */,
-				A626E5221A92D02100169035 /* LaunchScreen.xib */,
-				A626E5181A92D02100169035 /* HopTimer.xcdatamodeld */,
 				A626E53D1A92DA2D00169035 /* IngredientType.swift */,
 				A626E53B1A92DA2D00169035 /* Ingredient.swift */,
 				A626E5391A92DA2B00169035 /* Recipe.swift */,
+				A626E51D1A92D02100169035 /* Main.storyboard */,
+				A626E5181A92D02100169035 /* HopTimer.xcdatamodeld */,
+				A626E5201A92D02100169035 /* Images.xcassets */,
+				A626E5221A92D02100169035 /* LaunchScreen.xib */,
 				A626E5141A92D02100169035 /* Supporting Files */,
 			);
 			path = HopTimer;
@@ -227,12 +227,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A626E51C1A92D02100169035 /* ViewController.swift in Sources */,
 				A626E5171A92D02100169035 /* AppDelegate.swift in Sources */,
 				A626E53E1A92DA2D00169035 /* IngredientType.swift in Sources */,
 				A626E53C1A92DA2D00169035 /* Ingredient.swift in Sources */,
 				A626E5401A92DB5800169035 /* RecipeTVC.swift in Sources */,
 				A626E51A1A92D02100169035 /* HopTimer.xcdatamodeld in Sources */,
+				A6E6C2991A9427120093CC7C /* AddRecipeVC.swift in Sources */,
 				A626E53A1A92DA2B00169035 /* Recipe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
