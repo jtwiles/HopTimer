@@ -23,14 +23,40 @@ class AddRecipeVC: UIViewController {
     @IBOutlet var txtBoilTime: UITextField!
     @IBOutlet var txtStyle: UITextField!
     
+    var context: NSManagedObjectContext!
+    
+    var delegate: RecipeAddDelegate?
+    
+    
     //cancel button press
     @IBAction func Cancel(sender: AnyObject) {
+        self.view.endEditing(true)
+        self.delegate?.addRecipeCanceled()
         
     }
     
     
     @IBAction func Save(sender: AnyObject) {
         
+        //NEED SOME ERROR CHECKING TO MAKE SURE THEY ENTERED VALID DATA
+        let recipeEntity = NSEntityDescription.entityForName("Recipe", inManagedObjectContext: context!)
+        let recipe = Recipe(entity: recipeEntity!, insertIntoManagedObjectContext: context)
+        recipe.name = txtRecipeName.text
+        recipe.boilTime = txtBoilTime.text.toInt()!
+        recipe.style = txtStyle.text
+        
+        var error: NSError?
+        
+        if !context.save(&error){
+            println("Could not save \(error)")
+        }else{
+            
+            self.delegate?.didAddRecipe(recipe)
+        }
+        
+        //Close out the keyboard if it is still open and dissmiss the viewcontroller
+        self.view.endEditing(true)
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     
@@ -47,15 +73,10 @@ class AddRecipeVC: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        self.view.endEditing(true)
     }
-    */
+    
 
 }
 

@@ -9,12 +9,12 @@
 import UIKit
 import CoreData
 
-class RecipeTVC: UITableViewController {
+class RecipeTVC: UITableViewController, NSFetchedResultsControllerDelegate, RecipeAddDelegate {
 
     //Variable to hold the managed object context
     var context: NSManagedObjectContext!
     //Variable to hold the fetched results controller
-    var fetchedResultsController: NSFetchedResultsController!
+    //var fetchedResultsController: NSFetchedResultsController!
     
     //We want to always have available a reference to the current selected recipe
     var currentRecipe: Recipe!
@@ -26,7 +26,7 @@ class RecipeTVC: UITableViewController {
     var kAddRecipeSegueID = "addRecipe"
     
     //will be set to true if the user is adding a new recipe
-    var isadding: Bool = false
+    var isAdding: Bool = false
     
     
     //Function to load recipes into the Fetched Results Controller
@@ -55,9 +55,10 @@ class RecipeTVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadSomeData()
+        fetchedResultsController.delegate = self
+        //loadSomeData()
         
-        fetchedResultsController = loadRecipesFR()
+        //fetchedResultsController = loadRecipesFR()
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -150,15 +151,102 @@ class RecipeTVC: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+
+        if segue.identifier == kAddRecipeSegueID{
+            let addRecipe = segue.destinationViewController as AddRecipeVC
+            addRecipe.context = self.context
+            addRecipe.delegate = self
+            isAdding = true
+        }
+        
+        
+        
     }
-    */
+    
+    // MARK: - Recipe Delegate functions
+    
+    func addRecipeCanceled() {
+        isAdding = false
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func didAddRecipe(recipeAdded: Recipe?) {
+        
+        //Refresh the fetched results controller
+        self.tableView.reloadData()
+    }
+    
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        tableView.reloadData()
+    }
+    
+
+    
+    
+    
+    //=====================================================================
+    //--- NSFetchedResultsController implementation
+    //--- Use this to tie core data fetched results to a tableViewController
+    //======================================================================
+    
+    //Lazy Instatiation method to create an instance of NSFetchedResultsController
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        //Now we create an NSFetchRequest object and attach it to an entity
+        let request = NSFetchRequest(entityName: "Recipe")
+        let entity = NSEntityDescription.entityForName("Recipe", inManagedObjectContext: self.context)
+        request.entity = entity
+        
+        //Add in a sort descriptor so the data displayed isn't just random
+        //This is required when using a fetched results controller
+        var sortDesc: NSSortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        request.sortDescriptors = [sortDesc]
+        
+        //Create the fetched results controller
+        let fRC = NSFetchedResultsController(fetchRequest: request,
+            managedObjectContext: self.context!, sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        
+        var err: NSError?
+    
+        if !fRC.performFetch(&err){
+            NSLog(err!.description)
+            abort()
+        }
+        
+        return fRC
+        
+    }()
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     // MARK: - LoadDefaultData
     func loadSomeData(){
@@ -188,7 +276,7 @@ class RecipeTVC: UITableViewController {
         ingr3.ingredientType = "Clarifier"
         ingr3.boilTime = 10
         ingr3.recipe = recipe
-
+        
         var error: NSError?
         
         if !context.save(&error){
@@ -196,42 +284,4 @@ class RecipeTVC: UITableViewController {
         }
     }
     
-    
-    /*
-    //=====================================================================
-    //--- NSFetchedResultsController implementation
-    //--- Use this to tie core data fetched results to a tableViewController
-    //======================================================================
-    
-    //Lazy Instatiation method to create an instance of NSFetchedResultsController
-    lazy var fetchedResultsController: NSFetchedResultsController = {
-        //Now we create an NSFetchRequest object and attach it to an entity
-        let request = NSFetchRequest(entityName: "Recipe")
-        let entity = NSEntityDescription.entityForName("Recipe", inManagedObjectContext: self.context)
-        request.entity = entity
-        
-        //Add in a sort descriptor so the data displayed isn't just random
-        var sortDesc: NSSortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-        var sortDescriptiors = [sortDesc]
-        request.sortDescriptors = sortDescriptiors
-        
-        let fRC = NSFetchedResultsController(fetchRequest: request,
-            managedObjectContext: self.context!, sectionNameKeyPath: nil,
-            cacheName: nil)
-        
-        //fRC.delegate = self
-        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-        request.sortDescriptors = [sortDescriptor]
-        
-        var err: NSError?
-    
-        if !fRC.performFetch(&err){
-            NSLog(err!.description)
-            abort()
-        }
-        
-        return fRC
-        
-    }()
-    */
 }
